@@ -3,9 +3,6 @@ from rich.table import Table
 from rich.console import Console
 from classes.classes import Entry
 
-def get_reading_date(file_name):
-    return file_name[file_name.find('-')+1:file_name.find('.', file_name.find('-'))]
-
 def get_entry_data(line):
     return line[1:].strip().split('/')
 
