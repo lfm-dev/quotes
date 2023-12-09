@@ -8,7 +8,7 @@ def make_table_entries(table, entries):
     table.add_column('Quotes', justify='left')
 
     for entry in entries:
-        table.add_row(entry.id_, entry.name, entry.author, str(entry.n_quotes))
+        table.add_row(entry.id_, entry.book_name, entry.author, str(entry.n_quotes))
     return table
 
 def make_table_quotes(): pass

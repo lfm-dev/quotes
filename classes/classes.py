@@ -1,7 +1,7 @@
 class Entry:
-    def __init__(self, id_, name, author):
+    def __init__(self, id_, book_name, author):
         self.id_ = id_
-        self.name = name
+        self.book_name = book_name
         self.author = author
         self.quotes = []
         self.n_quotes = 0
@@ -19,4 +19,4 @@ class Entry:
         return '20' + self.id_[1:self.id_.find('-')] # this will work until the year 2100
 
     def __repr__(self):
-        return f'{self.id_} {self.name} {self. author} {self.n_quotes}'
+        return f'{self.id_} {self.book_name} {self. author} {self.n_quotes}'
