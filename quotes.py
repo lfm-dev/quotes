@@ -24,8 +24,6 @@ def read_md_file(md_file_name):
                 quotes[book_name] = []
                 entry = Entry(id_, book_name, author)
                 entries.append(entry)
-            elif line.startswith('['):
-                entry.add_tags(line)
             elif line.startswith('*'):
                 quotes[book_name].append('')
                 quote_number = len(quotes[book_name])-1
