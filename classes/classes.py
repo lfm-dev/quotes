@@ -54,3 +54,11 @@ class DB:
         except sqlite3.IntegrityError as e:
             print('Error:', e)
         self.commit_and_close(con)
+
+    def search_data(self, query):
+        con = self.get_conection()
+        cursor = self.get_cursor(con)
+        cursor.execute(f"SELECT * FROM books WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'")
+        hits = cursor.fetchall()
+        self.commit_and_close(con)
+        return hits
