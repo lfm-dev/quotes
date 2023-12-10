@@ -37,13 +37,16 @@ def add_quotes_to_entries(entries, quotes):
         for quote in quotes[entry.book_name]:
             entry.add_quote(quote.strip()) # remove last \n
 
+def create_tables(db):
+    db.create_table('books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
+    db.create_table('quotes', 'book_id TEXT', 'quote TEXT')
+
 def main():
     quotes_path = '/path/to/your/quotes/folder'
     os.chdir(quotes_path)
 
     db = DB('book_quotes.db')
-    db.create_table('books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
-    db.create_table('quotes', 'book_id TEXT', 'quote TEXT')
+    create_tables(db)
 
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
     for md_file_name in quotes_files:
