@@ -41,13 +41,16 @@ class DB:
         cursor = self.get_cursor(con)
         try:
             cursor.execute(f"""CREATE TABLE {table_name}({columns})""")
-        except sqlite3.OperationalError: # table already exists
-            pass
+        except sqlite3.OperationalError as e: # table already exists
+            print('Error:', e)
         self.commit_and_close(con)
 
     def insert_data(self, table_name, data_list):
         data_schema = '(' + ('?,'*len(data_list[0]))[:-1] + ')' # e.g (?,?,?)
         con = self.get_conection()
         cursor = self.get_cursor(con)
-        cursor.executemany(f'INSERT INTO {table_name} VALUES {data_schema}', data_list)
+        try:
+            cursor.executemany(f'INSERT INTO {table_name} VALUES {data_schema}', data_list)
+        except sqlite3.IntegrityError as e:
+            print('Error:', e)
         self.commit_and_close(con)
