@@ -1,6 +1,6 @@
 import sqlite3
 
-class Entry:
+class Book:
     def __init__(self, id_, book_name, author):
         self.id_ = id_
         self.book_name = book_name
