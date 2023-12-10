@@ -1,6 +1,13 @@
 import os
 from classes.classes import Entry
+from classes.classes import DB
 from print_table import print_table
+
+def add_data_to_db(db, entries):
+    books_data = [(entry.id_, entry.book_name, entry.author, entry.n_quotes) for entry in entries]
+    quotes_data = [(entry.id_, quote) for entry in entries for quote in entry.quotes]
+    db.insert_data('books', books_data)
+    db.insert_data('quotes', quotes_data)
 
 def get_entry_data(line):
     return line[1:].strip().split('/')
@@ -36,10 +43,15 @@ def main():
     quotes_path = '/path/to/your/quotes/folder'
     os.chdir(quotes_path)
 
+    db = DB('book_quotes.db')
+    db.create_table('books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
+    db.create_table('quotes', 'book_id TEXT', 'quote TEXT')
+
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
     for md_file_name in quotes_files:
         entries, quotes = read_md_file(md_file_name)
         add_quotes_to_entries(entries, quotes)
+        add_data_to_db(db, entries)
         print_table(entries)
 
 if __name__ == '__main__':
