@@ -55,13 +55,13 @@ class DB:
             print('Warning:', e)
         self.commit_and_close(con)
 
-    def get_book_data(self, query = False):
+    def get_book_data(self, query):
         con = self.get_conection()
         cursor = self.get_cursor(con)
-        if query:
-            cursor.execute(f"SELECT * FROM books WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'")
-        else:
+        if query == 'all':
             cursor.execute("SELECT * FROM books")
+        else:
+            cursor.execute(f"SELECT * FROM books WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'")
         hits = cursor.fetchall()
         self.commit_and_close(con)
         return hits

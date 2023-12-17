@@ -50,13 +50,11 @@ def make_update_db(db):
         add_quotes_to_books(books, quotes)
         add_data_to_db(db, books)
 
-
 def get_args():
     parser = argparse.ArgumentParser(prog='quotes', description='Manage your book quotes')
     parser.add_argument('-makedb', action='store_true', dest='makedb', help='Make (or update) sqlite3 db')
-    parser.add_argument('-b', '-books', action='store_true', dest='book', help='Show all books')
+    parser.add_argument('-b', '-books', metavar='', dest='books', help='Search books by name or author ("all" to show all books)')
     args = parser.parse_args()
-    print(args)
     return args
 
 def main():
@@ -65,16 +63,12 @@ def main():
     db = DB('book_quotes.db')
 
     args = get_args()
-
     if args.makedb: # make (or update) sqlite3 db
         make_update_db(db)
-    elif args.book: # show all books
-        book_list = db.get_book_data()
+    elif args.books: # search books
+        book_list = db.get_book_data(args.books)
         books = [Book(id_ = entry[0], book_name = entry[1], author = entry[2], n_quotes = entry[3]) for entry in book_list]
         print_table(books)
-    else:
-        print(args)
-
 
 if __name__ == '__main__':
     main()
