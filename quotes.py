@@ -1,4 +1,5 @@
 import os
+import argparse
 from classes.classes import Book
 from classes.classes import DB
 from print_table import print_table
@@ -41,19 +42,32 @@ def create_tables(db):
     db.create_table('books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
     db.create_table('quotes', 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'quote TEXT')
 
-def main():
-    quotes_path = '/path/to/your/quotes/folder'
-    os.chdir(quotes_path)
-
-    db = DB('book_quotes.db')
+def make_update_db(db):
     create_tables(db)
-
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
     for md_file_name in quotes_files:
         books, quotes = read_md_file(md_file_name)
         add_quotes_to_books(books, quotes)
         add_data_to_db(db, books)
-        print_table(books)
+
+
+def get_args():
+    parser = argparse.ArgumentParser(prog='quotes', description='Manage your book quotes')
+    parser.add_argument('-makedb', action='store_true', dest='makedb', help='Make (or update) sqlite3 db') # guardo entrada en makedb
+    args = parser.parse_args()
+    return args
+
+def main():
+    quotes_path = '/path/to/your/quotes/folder'
+    os.chdir(quotes_path)
+    db = DB('book_quotes.db')
+
+    args = get_args()
+
+    if args.makedb:
+        make_update_db(db)
+
+    # print_table(books)
 
 if __name__ == '__main__':
     main()

@@ -42,7 +42,7 @@ class DB:
         try:
             cursor.execute(f"""CREATE TABLE {table_name}({columns})""")
         except sqlite3.OperationalError as e: # table already exists
-            print('Error:', e)
+            print('Warning:', e)
         self.commit_and_close(con)
 
     def insert_data(self, table_name, data_list):
@@ -52,7 +52,7 @@ class DB:
         try:
             cursor.executemany(f'INSERT OR IGNORE INTO {table_name} VALUES {data_schema}', data_list)
         except sqlite3.IntegrityError as e:
-            print('Error:', e)
+            print('Warning:', e)
         self.commit_and_close(con)
 
     def search_data(self, query):
