@@ -1,12 +1,12 @@
 import sqlite3
 
 class Book:
-    def __init__(self, id_, book_name, author):
+    def __init__(self, id_, book_name, author, n_quotes = 0):
         self.id_ = id_
         self.book_name = book_name
         self.author = author
         self.quotes = []
-        self.n_quotes = 0
+        self.n_quotes = n_quotes
 
     def add_quote(self, quote):
         self.quotes.append(quote)
@@ -55,10 +55,13 @@ class DB:
             print('Warning:', e)
         self.commit_and_close(con)
 
-    def search_data(self, query):
+    def get_book_data(self, query = False):
         con = self.get_conection()
         cursor = self.get_cursor(con)
-        cursor.execute(f"SELECT * FROM books WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'")
+        if query:
+            cursor.execute(f"SELECT * FROM books WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'")
+        else:
+            cursor.execute("SELECT * FROM books")
         hits = cursor.fetchall()
         self.commit_and_close(con)
         return hits
