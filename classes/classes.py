@@ -50,7 +50,7 @@ class DB:
         con = self.get_conection()
         cursor = self.get_cursor(con)
         try:
-            cursor.executemany(f'INSERT INTO {table_name} VALUES {data_schema}', data_list)
+            cursor.executemany(f'INSERT OR IGNORE INTO {table_name} VALUES {data_schema}', data_list)
         except sqlite3.IntegrityError as e:
             print('Error:', e)
         self.commit_and_close(con)

@@ -5,7 +5,7 @@ from print_table import print_table
 
 def add_data_to_db(db, books):
     books_data = [(book.id_, book.book_name, book.author, book.n_quotes) for book in books]
-    quotes_data = [(book.id_, quote) for book in books for quote in book.quotes]
+    quotes_data = [(f'{n}-{book.id_}', book.id_, quote) for book in books for n, quote in enumerate(book.quotes)]
     db.insert_data('books', books_data)
     db.insert_data('quotes', quotes_data)
 
@@ -39,7 +39,7 @@ def add_quotes_to_books(books, quotes):
 
 def create_tables(db):
     db.create_table('books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
-    db.create_table('quotes', 'book_id TEXT', 'quote TEXT')
+    db.create_table('quotes', 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'quote TEXT')
 
 def main():
     quotes_path = '/path/to/your/quotes/folder'
