@@ -20,7 +20,7 @@ def read_md_file(md_file_name):
         for line in file_handle:
             if not line.strip():
                 continue
-            elif line.startswith('#'):
+            if line.startswith('#'):
                 id_, book_name, author = get_book_data(line)
                 quotes[book_name] = []
                 book = Book(id_, book_name, author)
