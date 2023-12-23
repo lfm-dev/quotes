@@ -1,12 +1,12 @@
 import os
 import argparse
-from classes.classes import Book
+from classes.classes import Book, Quote
 from classes.classes import DB
 from print_table import print_table
 
-def add_data_to_db(db, books):
+def add_data_to_db(db, books, quotes):
     books_data = [(book.id_, book.book_name, book.author, book.n_quotes) for book in books]
-    quotes_data = [(f'{n}-{book.id_}', book.id_, quote) for book in books for n, quote in enumerate(book.quotes)]
+    quotes_data = [(f'{n}-{quote.book_id}', quote.book_id, quote.quote) for n, quote in enumerate(quotes)]
     db.insert_data('books', books_data)
     db.insert_data('quotes', quotes_data)
 
@@ -22,32 +22,36 @@ def read_md_file(md_file_name):
                 continue
             if line.startswith('#'):
                 id_, book_name, author = get_book_data(line)
-                quotes[book_name] = []
+                quotes[id_] = []
                 book = Book(id_, book_name, author)
                 books.append(book)
             elif line.startswith('*'):
-                quotes[book_name].append('')
-                quotes[book_name][-1] += line.lstrip('* ')
+                quotes[id_].append('')
+                quotes[id_][-1] += line.lstrip('* ')
             else:
-                quotes[book_name][-1] += line
+                quotes[id_][-1] += line
     return books, quotes
 
-def add_quotes_to_books(books, quotes):
+def add_n_quotes_to_books(books, quotes):
     for book in books:
-        for quote in quotes[book.book_name]:
-            book.add_quote(quote.strip()) # remove last \n
+        book.n_quotes = len(quotes[book.id_])
 
 def create_tables(db):
     db.create_table('books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
     db.create_table('quotes', 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'quote TEXT')
+
+def make_quotes(quotes):
+    quotes = [Quote(book_id, quote) for book_id in quotes for quote in quotes[book_id]]
+    return quotes
 
 def make_update_db(db):
     create_tables(db)
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
     for md_file_name in quotes_files:
         books, quotes = read_md_file(md_file_name)
-        add_quotes_to_books(books, quotes)
-        add_data_to_db(db, books)
+        add_n_quotes_to_books(books, quotes)
+        quotes = make_quotes(quotes)
+        add_data_to_db(db, books, quotes)
 
 def get_args():
     parser = argparse.ArgumentParser(prog='quotes', description='Manage your book quotes')
