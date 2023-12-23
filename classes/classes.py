@@ -65,3 +65,11 @@ class DB:
         hits = cursor.fetchall()
         self.commit_and_close(con)
         return hits
+
+    def get_book_quotes(self, book_id):
+        con = self.get_conection()
+        cursor = self.get_cursor(con)
+        cursor.execute(f"SELECT * FROM quotes WHERE book_id LIKE '%{book_id}%'")
+        quotes = cursor.fetchall()
+        self.commit_and_close(con)
+        return quotes

@@ -11,10 +11,18 @@ def make_table_books(table, books):
         table.add_row(book.id_, book.book_name, book.author, str(book.n_quotes))
     return table
 
-def make_table_quotes(): pass
+def make_table_quotes(table, quotes):
+    table.add_column('Quotes', justify='left')
 
-def print_table(entries):
+    for quote in quotes:
+        table.add_row(quote[2], end_section=True)
+    return table
+
+def print_table(entries, table_type):
     table = Table(show_header=True, header_style='bold green')
-    table = make_table_books(table, entries)
+    if table_type == 'books':
+        table = make_table_books(table, entries)
+    elif table_type == 'quotes':
+        table = make_table_quotes(table, entries)
     console = Console()
     console.print(table)

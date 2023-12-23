@@ -54,6 +54,7 @@ def get_args():
     parser = argparse.ArgumentParser(prog='quotes', description='Manage your book quotes')
     parser.add_argument('-makedb', action='store_true', dest='makedb', help='Make (or update) sqlite3 db')
     parser.add_argument('-b', '-books', metavar='', dest='books', help='Search books by name or author ("all" to show all books)')
+    parser.add_argument('-q', '-quotes', metavar='', dest='quotes', help='Show all quotes of a book by book ID')
     args = parser.parse_args()
     return args
 
@@ -68,7 +69,10 @@ def main():
     elif args.books: # search books
         book_list = db.get_book_data(args.books)
         books = [Book(id_ = entry[0], book_name = entry[1], author = entry[2], n_quotes = entry[3]) for entry in book_list]
-        print_table(books)
+        print_table(books, 'books')
+    elif args.quotes: # show quotes
+        quotes = db.get_book_quotes(args.quotes)
+        print_table(quotes, 'quotes')
 
 if __name__ == '__main__':
     main()
