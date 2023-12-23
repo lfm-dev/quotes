@@ -55,16 +55,16 @@ class DB:
             print('Warning:', e)
         self.commit_and_close(con)
 
-    def get_book_data(self, query):
+    def get_books_data(self, query):
         con = self.get_conection()
         cursor = self.get_cursor(con)
         if query == 'all':
             cursor.execute("SELECT * FROM books")
         else:
             cursor.execute(f"SELECT * FROM books WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'")
-        hits = cursor.fetchall()
+        books = cursor.fetchall()
         self.commit_and_close(con)
-        return hits
+        return books
 
     def get_book_quotes(self, book_id):
         con = self.get_conection()

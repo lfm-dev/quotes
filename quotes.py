@@ -27,10 +27,9 @@ def read_md_file(md_file_name):
                 books.append(book)
             elif line.startswith('*'):
                 quotes[book_name].append('')
-                quote_number = len(quotes[book_name])-1
-                quotes[book_name][quote_number] += line.lstrip('* ')
+                quotes[book_name][-1] += line.lstrip('* ')
             else:
-                quotes[book_name][quote_number] += line
+                quotes[book_name][-1] += line
     return books, quotes
 
 def add_quotes_to_books(books, quotes):
@@ -67,7 +66,7 @@ def main():
     if args.makedb: # make (or update) sqlite3 db
         make_update_db(db)
     elif args.books: # search books
-        book_list = db.get_book_data(args.books)
+        book_list = db.get_books_data(args.books)
         books = [Book(id_ = entry[0], book_name = entry[1], author = entry[2], n_quotes = entry[3]) for entry in book_list]
         print_table(books, 'books')
     elif args.quotes: # show quotes
