@@ -1,3 +1,3 @@
 # quotes
 
-Manage your quotes.
+Manage your book quotes.
