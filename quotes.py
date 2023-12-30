@@ -1,7 +1,8 @@
 import os
 import argparse
-from classes.classes import Book, Quote
-from classes.classes import DB
+from classes.Book import Book
+from classes.Quote import Quote
+from classes.DB import DB
 from print_table import print_table
 
 def add_data_to_db(db, books, quotes):
