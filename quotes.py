@@ -60,14 +60,14 @@ def get_args():
     parser.add_argument('-b', '-books', metavar='', dest='books', help='Search books by name or author ("all" to show all books)')
     parser.add_argument('-q', '-quotes', metavar='', dest='quotes', help='Show all quotes of a book by book ID')
     args = parser.parse_args()
-    return args
+    return args, parser
 
 def main():
     quotes_path = '/path/to/your/quotes/folder'
     os.chdir(quotes_path)
     db = DB('book_quotes.db')
 
-    args = get_args()
+    args, parser = get_args()
     if args.makedb: # make (or update) sqlite3 db
         make_update_db(db)
     elif args.books: # search books
@@ -77,6 +77,9 @@ def main():
     elif args.quotes: # show quotes
         quotes = db.get_book_quotes(args.quotes)
         print_table(quotes, 'quotes')
+    else:
+        parser.print_help()
+
 
 if __name__ == '__main__':
     main()
