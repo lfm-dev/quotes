@@ -1,7 +1,7 @@
 import os
 from classes.DB import DB
 from components.print_table import print_table
-from components.DB_management import make_update_db
+from components.make_update_db import main as make_update_db
 from components.args_parser import get_args
 
 def main():
