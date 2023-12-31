@@ -20,7 +20,7 @@ def read_md_file(md_file_name):
                 quotes[id_][-1] += line.lstrip('* ')
             else:
                 quotes[id_][-1] += line
-    quotes = [Quote(book_id, quote) for book_id in quotes for quote in quotes[book_id]]
+    quotes = [Quote(f'{n}-{book_id}', book_id, quote) for book_id in quotes for n, quote in enumerate(quotes[book_id])]
     return books, quotes
 
 def get_book_data(line):
@@ -32,7 +32,7 @@ def create_tables(db):
 
 def add_data_to_db(db, books, quotes):
     books_data = [(book.id_, book.book_name, book.author, book.n_quotes) for book in books]
-    quotes_data = [(f'{n}-{quote.book_id}', quote.book_id, quote.quote) for n, quote in enumerate(quotes)]
+    quotes_data = [(quote.quote_id, quote.book_id, quote.quote) for quote in quotes]
     db.insert_data('books', books_data)
     db.insert_data('quotes', quotes_data)
 
