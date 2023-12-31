@@ -1,4 +1,5 @@
 import sqlite3
+from classes.Book import Book
 
 class DB:
     def __init__(self, db_name):
@@ -49,12 +50,14 @@ class DB:
             cursor.execute(f"SELECT * FROM books WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'")
         books = cursor.fetchall()
         self.commit_and_close(con)
+        books = [Book(id_ = entry[0], book_name = entry[1], author = entry[2], n_quotes = entry[3]) for entry in books]
         return books
 
     def get_book_quotes(self, book_id):
         con = self.get_conection()
         cursor = self.get_cursor(con)
-        cursor.execute(f"SELECT * FROM quotes WHERE book_id LIKE '%{book_id}%'")
+        cursor.execute(f"SELECT quote FROM quotes WHERE book_id LIKE '%{book_id}%'")
         quotes = cursor.fetchall()
         self.commit_and_close(con)
+        quotes = [quote[0] for quote in quotes] # fetchall returns list of tuples
         return quotes

@@ -15,7 +15,7 @@ def make_table_quotes(table, quotes):
     table.add_column('Quotes', justify='left')
 
     for quote in quotes:
-        table.add_row(quote[2], end_section=True)
+        table.add_row(quote, end_section=True)
     return table
 
 def print_table(entries, table_type):
