@@ -25,10 +25,7 @@ class DB:
         columns = (', ').join(columns)
         con = self.get_conection()
         cursor = self.get_cursor(con)
-        try:
-            cursor.execute(f"""CREATE TABLE {table_name}({columns})""")
-        except sqlite3.OperationalError as e: # table already exists
-            print('Warning:', e)
+        cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name}({columns})""")
         self.commit_and_close(con)
 
     def insert_data(self, table_name, data_list):
