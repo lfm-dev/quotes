@@ -60,7 +60,7 @@ class DB:
             cursor.execute(f"SELECT * FROM books WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'")
         books = cursor.fetchall()
         self.commit_and_close(con)
-        books = [Book(book_id = entry[0], book_name = entry[1], author = entry[2], n_quotes = entry[3]) for entry in books]
+        books = [Book(book_id = book[0], book_name = book[1], author = book[2], n_quotes = book[3]) for book in books]
         return books
 
     def get_book_quotes(self, book_id):
