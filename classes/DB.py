@@ -1,4 +1,5 @@
 import sqlite3
+import sys
 from classes.Book import Book
 from classes.Quote import Quote
 
@@ -29,6 +30,16 @@ class DB:
         cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name}({columns})""")
         self.commit_and_close(con)
 
+    def check_table_exists(self, table_name):
+        con = self.get_conection()
+        cursor = self.get_cursor(con)
+        cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'")
+        tables = cursor.fetchall()
+        self.commit_and_close(con)
+        if not tables:
+            print(f'Table "{table_name}" doesnt exists')
+            sys.exit(1)
+
     def insert_data(self, table_name, data_list):
         data_schema = '(' + ('?,'*len(data_list[0]))[:-1] + ')' # e.g (?,?,?)
         con = self.get_conection()
@@ -40,6 +51,7 @@ class DB:
         self.commit_and_close(con)
 
     def get_books_data(self, query):
+        self.check_table_exists('books')
         con = self.get_conection()
         cursor = self.get_cursor(con)
         if query == 'all':
@@ -52,6 +64,7 @@ class DB:
         return books
 
     def get_book_quotes(self, book_id):
+        self.check_table_exists('quotes')
         con = self.get_conection()
         cursor = self.get_cursor(con)
         cursor.execute(f"SELECT * FROM quotes WHERE book_id LIKE '{book_id}'")
