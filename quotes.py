@@ -14,10 +14,12 @@ def main():
         make_update_db(db)
     elif args.books: # search books
         books = db.get_books_data(args.books)
-        print_table(books, 'books')
+        if books:
+            print_table(books, 'books')
     elif args.quotes: # show quotes
         quotes = db.get_book_quotes(args.quotes)
-        print_table(quotes, 'quotes')
+        if quotes:
+            print_table(quotes, 'quotes')
     else:
         parser.print_help()
 
