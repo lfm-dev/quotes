@@ -1,3 +1,5 @@
+import sys
+
 def create_table(db, table_name, *columns):
     columns = (', ').join(columns)
     con = db.get_conection()
@@ -25,4 +27,7 @@ def retrieve_data(db, table, query):
     cursor.execute(f"SELECT * FROM {table} {sql_cmd}")
     data = cursor.fetchall()
     db.commit_and_close(con)
+    if not data:
+        print(f"'{query}' not found")
+        sys.exit(1)
     return data
