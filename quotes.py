@@ -1,8 +1,9 @@
 import os
 from classes.DB import DB
 from components.print_table import print_table
-from components.make_update_db import main as make_update_db
-from components.args_parser import get_args
+from components.make_update_db import make_update_db
+from components.utils import get_args, make_books, make_quotes
+from components.api import retrieve_data
 
 def main():
     quotes_path = '/path/to/your/quotes/folder'
@@ -13,12 +14,14 @@ def main():
     if args.makedb: # make (or update) sqlite3 db
         make_update_db(db)
     elif args.books: # search books
-        books = db.get_books_data(args.books)
+        books = retrieve_data(db, 'books', query=args.books)
         if books:
+            books = make_books(books)
             print_table(books, 'books')
     elif args.quotes: # show quotes
-        quotes = db.get_book_quotes(args.quotes)
+        quotes = retrieve_data(db, 'quotes', query=args.quotes)
         if quotes:
+            quotes = make_quotes(quotes)
             print_table(quotes, 'quotes')
     else:
         parser.print_help()

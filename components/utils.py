@@ -1,4 +1,6 @@
 import argparse
+from classes.Book import Book
+from classes.Quote import Quote
 
 def get_args():
     parser = argparse.ArgumentParser(prog='quotes', description='Manage your book quotes')
@@ -7,3 +9,9 @@ def get_args():
     parser.add_argument('-q', '-quotes', metavar='', dest='quotes', help='Show all quotes of a book by book ID')
     args = parser.parse_args()
     return args, parser
+
+def make_books(books):
+    return [Book(book_id = book[0], book_name = book[1], author = book[2], n_quotes = book[3]) for book in books]
+
+def make_quotes(quotes):
+    return [Quote(quote_id = quote[0], book_id = quote[1], quote = quote[2]) for quote in quotes]
