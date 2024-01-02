@@ -5,7 +5,7 @@ from classes.Book import Book
 
 def read_md_file(md_file_name):
     quotes = {}
-    books = []
+    books = {}
     with open(md_file_name) as file_handle:
         for line in file_handle:
             if not line.strip():
@@ -14,14 +14,15 @@ def read_md_file(md_file_name):
                 book_id, book_name, author = get_book_data(line)
                 quotes[book_id] = []
                 book = Book(book_id, book_name, author)
-                books.append(book)
+                books[book.book_id] = book
             elif line.startswith('*'):
                 book.n_quotes += 1
                 quotes[book_id].append('')
                 quotes[book_id][-1] += line.lstrip('* ')
             else:
                 quotes[book_id][-1] += line
-    quotes = [Quote(f'{n}-{book_id}', book_id, quote) for book_id in quotes for n, quote in enumerate(quotes[book_id])]
+    quotes = [Quote(f'{n}-{book_id}', book_id, books[book_id].book_name, quote) for book_id in quotes for n, quote in enumerate(quotes[book_id])]
+    books = [books[book_id] for book_id in books]
     return books, quotes
 
 def get_book_data(line):
@@ -29,11 +30,11 @@ def get_book_data(line):
 
 def create_tables(db):
     create_table(db, 'books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
-    create_table(db, 'quotes', 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'quote TEXT')
+    create_table(db, 'quotes', 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'book_name TEXT', 'quote TEXT')
 
 def add_data_to_db(db, books, quotes):
     books_data = [(book.book_id, book.book_name, book.author, book.n_quotes) for book in books]
-    quotes_data = [(quote.quote_id, quote.book_id, quote.quote) for quote in quotes]
+    quotes_data = [(quote.quote_id, quote.book_id, quote.book_name, quote.quote) for quote in quotes]
     insert_data(db, 'books', books_data)
     insert_data(db, 'quotes', quotes_data)
 

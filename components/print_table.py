@@ -12,7 +12,7 @@ def make_table_books(table, books):
     return table
 
 def make_table_quotes(table, quotes):
-    table.add_column('Quotes', justify='left')
+    table.add_column(f'Quotes - {quotes[0].book_name}', justify='left')
 
     for quote in quotes:
         table.add_row(quote.quote, end_section=True)

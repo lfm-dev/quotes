@@ -14,4 +14,4 @@ def make_books(books):
     return [Book(book_id = book[0], book_name = book[1], author = book[2], n_quotes = book[3]) for book in books]
 
 def make_quotes(quotes):
-    return [Quote(quote_id = quote[0], book_id = quote[1], quote = quote[2]) for quote in quotes]
+    return [Quote(quote_id = quote[0], book_id = quote[1], book_name = quote[2], quote = quote[3]) for quote in quotes]
