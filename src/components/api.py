@@ -2,10 +2,7 @@ import sys
 
 def get_sql_cmd(table, query):
     if table == 'books':
-        if query == 'all':
-            sql_cmd = ''
-        else:
-            sql_cmd = f"WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'"
+        sql_cmd = '' if query == 'all' else f"WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'"
     elif table == 'quotes':
         sql_cmd = f"WHERE book_id LIKE '{query}'"
 
