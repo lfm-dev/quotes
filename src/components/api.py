@@ -1,5 +1,16 @@
 import sys
 
+def get_sql_cmd(table, query):
+    if table == 'books':
+        if query == 'all':
+            sql_cmd = ''
+        else:
+            sql_cmd = f"WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'"
+    elif table == 'quotes':
+        sql_cmd = f"WHERE book_id LIKE '{query}'"
+
+    return sql_cmd
+
 def create_table(db, table_name, *columns):
     columns = (', ').join(columns)
     con = db.get_conection()
@@ -16,18 +27,15 @@ def insert_data(db, table_name, data_list):
 
 def retrieve_data(db, table, query):
     db.check_table_exists(table)
-    if query == 'all' and table == 'books':
-        sql_cmd = ''
-    elif table == 'books':
-        sql_cmd = f"WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'"
-    elif table == 'quotes':
-        sql_cmd = f"WHERE book_id LIKE '{query}'"
     con = db.get_conection()
     cursor = db.get_cursor(con)
+    sql_cmd = get_sql_cmd(table, query)
     cursor.execute(f"SELECT * FROM {table} {sql_cmd}")
     data = cursor.fetchall()
     db.commit_and_close(con)
+
     if not data:
         print(f"'{query}' not found")
         sys.exit(1)
+
     return data
