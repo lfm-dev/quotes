@@ -1,7 +1,7 @@
 import os
-from components.api import create_table, insert_data
 from classes.Quote import Quote
 from classes.Book import Book
+from components.api import create_table, insert_data
 
 def read_md_file(md_file_name):
     quotes = {}
