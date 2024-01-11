@@ -32,6 +32,7 @@ def create_tables(db):
     create_table(db, 'books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
     create_table(db, 'quotes', 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'book_name TEXT', 'quote TEXT')
 
+#TODO send Book and Quote objects to api
 def add_data_to_db(db, books, quotes):
     books_data = [(book.book_id, book.book_name, book.author, book.n_quotes) for book in books]
     quotes_data = [(quote.quote_id, quote.book_id, quote.book_name, quote.quote) for quote in quotes]
