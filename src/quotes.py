@@ -5,6 +5,8 @@ from components.make_update_db import make_update_db
 from components.utils import get_args, make_books, make_quotes
 from components.api import retrieve_data
 
+#TODO installation script
+
 def main():
     quotes_path = '/path/to/your/quotes/folder'
     os.chdir(quotes_path)
