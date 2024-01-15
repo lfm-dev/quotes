@@ -1,6 +1,8 @@
 from rich.table import Table
 from rich.console import Console
 
+#TODO print quotes with markdown format
+
 def make_table_books(table, books):
     table.add_column('ID', justify='left')
     table.add_column('Name', justify='left')
