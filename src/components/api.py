@@ -1,4 +1,12 @@
 import sys
+from classes.Book import Book
+from classes.Quote import Quote
+
+def make_books(books):
+    return [Book(book_id = book[0], book_name = book[1], author = book[2], n_quotes = book[3]) for book in books]
+
+def make_quotes(quotes):
+    return [Quote(quote_id = quote[0], book_id = quote[1], book_name = quote[2], quote = quote[3]) for quote in quotes]
 
 def get_sql_cmd(table, query):
     if table == 'books':
@@ -36,4 +44,6 @@ def retrieve_data(db, table, query):
         print(f"'{query}' not found")
         sys.exit(1)
 
-    return data
+    entries = make_books(data) if table == 'books' else make_quotes(data) if table == 'quotes' else []
+
+    return entries
