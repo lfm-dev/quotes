@@ -15,11 +15,12 @@ def create_table(db, table_name, *columns):
     cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name}({columns})""")
     db.commit_and_close(con)
 
-def insert_data(db, table_name, data_list):
-    data_schema = '(' + ('?,'*len(data_list[0]))[:-1] + ')' # e.g (?,?,?)
+def insert_data(db, table_name, entries):
+    entries_data = [entry.get_data() for entry in entries]
+    data_schema = '(' + ('?,'*len(entries_data[0]))[:-1] + ')' # e.g (?,?,?)
     con = db.get_conection()
     cursor = db.get_cursor(con)
-    cursor.executemany(f'INSERT OR IGNORE INTO {table_name} VALUES {data_schema}', data_list)
+    cursor.executemany(f'INSERT OR IGNORE INTO {table_name} VALUES {data_schema}', entries_data)
     db.commit_and_close(con)
 
 def retrieve_data(db, table, query):

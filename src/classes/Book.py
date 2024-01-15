@@ -6,5 +6,8 @@ class Book:
         self.author = author
         self.n_quotes = n_quotes
 
+    def get_data(self):
+        return (self.book_id, self.book_name, self.author, self.n_quotes)
+
     def __repr__(self):
         return f'{self.book_id} {self.book_name} {self. author} {self.n_quotes}'

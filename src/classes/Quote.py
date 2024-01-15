@@ -5,5 +5,8 @@ class Quote:
         self.book_name = book_name
         self.quote = quote.rstrip()
 
+    def get_data(self):
+        return (self.quote_id, self.book_id, self.book_name, self.quote)
+
     def __repr__(self):
         return f'({self.quote_id}) {self.quote}'

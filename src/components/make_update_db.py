@@ -32,16 +32,10 @@ def create_tables(db):
     create_table(db, 'books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
     create_table(db, 'quotes', 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'book_name TEXT', 'quote TEXT')
 
-#TODO send Book and Quote objects to api
-def add_data_to_db(db, books, quotes):
-    books_data = [(book.book_id, book.book_name, book.author, book.n_quotes) for book in books]
-    quotes_data = [(quote.quote_id, quote.book_id, quote.book_name, quote.quote) for quote in quotes]
-    insert_data(db, 'books', books_data)
-    insert_data(db, 'quotes', quotes_data)
-
 def make_update_db(db):
     create_tables(db)
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
     for md_file_name in quotes_files:
         books, quotes = read_md_file(md_file_name)
-        add_data_to_db(db, books, quotes)
+        insert_data(db, 'books', books)
+        insert_data(db, 'quotes', quotes)
