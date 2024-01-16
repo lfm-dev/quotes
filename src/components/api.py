@@ -14,6 +14,6 @@ def retrieve_data(db, table, query):
         print(f"'{query}' not found")
         sys.exit(1)
 
-    entries = make_books(data) if table == 'books' else make_quotes(data) if table == 'quotes' else []
+    entries = make_books(data) if table.value == 'books' else make_quotes(data) if table.value == 'quotes' else []
 
     return entries

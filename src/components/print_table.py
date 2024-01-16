@@ -18,10 +18,10 @@ def make_markdown_quotes(quotes):
     quotes_markdown = Markdown(f'# {quotes[0].book_name}\n{(os.linesep).join(["* " + quote.quote for quote in quotes])}')
     return quotes_markdown
 
-def print_entries(entries, table_type):
-    if table_type == 'books':
+def print_entries(entries, table):
+    if table.value == 'books':
         entries = make_table_books(entries)
-    elif table_type == 'quotes':
+    elif table.value == 'quotes':
         entries = make_markdown_quotes(entries)
     console = Console()
     console.print(entries)

@@ -6,7 +6,6 @@ from components.utils import get_args
 from components.api import retrieve_data
 
 #TODO installation script
-#TODO tables with enums
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
@@ -17,11 +16,11 @@ def main():
     if args.makedb: # make (or update) sqlite3 db
         make_update_db(db)
     elif args.books: # search books
-        books = retrieve_data(db, 'books', query=args.books)
-        print_entries(books, 'books')
+        books = retrieve_data(db, db.books_table, query=args.books)
+        print_entries(books, db.books_table)
     elif args.quotes: # show quotes
-        quotes = retrieve_data(db, 'quotes', query=args.quotes)
-        print_entries(quotes, 'quotes')
+        quotes = retrieve_data(db, db.quotes_table, query=args.quotes)
+        print_entries(quotes, db.quotes_table)
     else:
         parser.print_help()
 

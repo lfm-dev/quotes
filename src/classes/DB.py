@@ -1,9 +1,12 @@
 import sqlite3
 import sys
+from classes.Table import Table
 
 class DB:
     def __init__(self, db_name):
         self.db_name = db_name
+        self.books_table = Table('books')
+        self.quotes_table = Table('quotes')
 
     def get_conection(self):
         con = sqlite3.connect(self.db_name)
@@ -18,13 +21,13 @@ class DB:
         con.commit()
         con.close()
 
-    def check_table_exists(self, table_name):
+    def check_table_exists(self, table):
         cursor, con = self.get_cursor_con()
-        cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'")
+        cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table.value}'")
         tables = cursor.fetchall()
         self.commit_and_close(con)
         if not tables:
-            print(f'Table "{table_name}" doesnt exists')
+            print(f'Table "{table.value}" doesnt exists')
             sys.exit(1)
 
     def create_table(self, table_name, columns):
@@ -39,20 +42,20 @@ class DB:
         cursor.executemany(f'INSERT OR IGNORE INTO {table_name} VALUES {data_schema}', entries_data)
         self.commit_and_close(con)
 
-    def retrieve_data(self, table_name, query):
-        self.check_table_exists(table_name)
+    def retrieve_data(self, table, query):
+        self.check_table_exists(table)
         cursor, con = self.get_cursor_con()
-        sql_cmd = self.get_sql_cmd(table_name, query)
-        cursor.execute(f"SELECT * FROM {table_name} {sql_cmd}")
+        sql_cmd = self.get_sql_cmd(table, query)
+        cursor.execute(f"SELECT * FROM {table.value} {sql_cmd}")
         data = cursor.fetchall()
         self.commit_and_close(con)
 
         return data
 
     def get_sql_cmd(self, table, query):
-        if table == 'books':
+        if table.value == 'books':
             sql_cmd = '' if query == 'all' else f"WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'"
-        elif table == 'quotes':
+        elif table.value == 'quotes':
             sql_cmd = f"WHERE book_id LIKE '{query}'"
 
         return sql_cmd
