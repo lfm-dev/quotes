@@ -25,4 +25,3 @@ def print_entries(entries, table_type):
         entries = make_markdown_quotes(entries)
     console = Console()
     console.print(entries)
-    print() # empty line at EOF

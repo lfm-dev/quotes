@@ -6,10 +6,10 @@ from components.utils import get_args
 from components.api import retrieve_data
 
 #TODO installation script
+QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
-    quotes_path = '/path/to/your/quotes/folder'
-    os.chdir(quotes_path)
+    os.chdir(QUOTES_PATH)
     db = DB('book_quotes.db')
 
     args, parser = get_args()
