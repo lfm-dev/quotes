@@ -1,9 +1,10 @@
+import os
 from rich.table import Table
 from rich.console import Console
+from rich.markdown import Markdown
 
-#TODO print quotes with markdown format
-
-def make_table_books(table, books):
+def make_table_books(books):
+    table = Table(show_header=True, header_style='bold green')
     table.add_column('ID', justify='left')
     table.add_column('Name', justify='left')
     table.add_column('Author', justify='left')
@@ -13,18 +14,15 @@ def make_table_books(table, books):
         table.add_row(book.book_id, book.book_name, book.author, str(book.n_quotes))
     return table
 
-def make_table_quotes(table, quotes):
-    table.add_column(f'Quotes - {quotes[0].book_name}', justify='left')
+def make_markdown_quotes(quotes):
+    quotes_markdown = Markdown(f'# {quotes[0].book_name}\n{(os.linesep).join(["* " + quote.quote for quote in quotes])}')
+    return quotes_markdown
 
-    for quote in quotes:
-        table.add_row(quote.quote, end_section=True)
-    return table
-
-def print_table(entries, table_type):
-    table = Table(show_header=True, header_style='bold green')
+def print_entries(entries, table_type):
     if table_type == 'books':
-        table = make_table_books(table, entries)
+        entries = make_table_books(entries)
     elif table_type == 'quotes':
-        table = make_table_quotes(table, entries)
+        entries = make_markdown_quotes(entries)
     console = Console()
-    console.print(table)
+    console.print(entries)
+    print() # empty line at EOF
