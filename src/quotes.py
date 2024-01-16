@@ -6,6 +6,7 @@ from components.utils import get_args
 from components.api import retrieve_data
 
 #TODO installation script
+#TODO tables with enums
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
