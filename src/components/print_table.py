@@ -19,9 +19,9 @@ def make_markdown_quotes(quotes):
     return quotes_markdown
 
 def print_entries(entries, table):
-    if table.value == 'books':
+    if table.TABLE_NAME == 'books':
         entries = make_table_books(entries)
-    elif table.value == 'quotes':
+    elif table.TABLE_NAME == 'quotes':
         entries = make_markdown_quotes(entries)
     console = Console()
     console.print(entries)

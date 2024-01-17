@@ -1,5 +1,5 @@
 import os
-from classes.DB import DB
+from classes.Table import BooksTable, QuotesTable
 from components.print_table import print_entries
 from components.make_update_db import make_update_db
 from components.utils import get_args
@@ -10,17 +10,18 @@ QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
     os.chdir(QUOTES_PATH)
-    db = DB('book_quotes.db')
+    books_table = BooksTable()
+    quotes_table = QuotesTable()
 
     args, parser = get_args()
     if args.makedb: # make (or update) sqlite3 db
-        make_update_db(db)
+        make_update_db(books_table, quotes_table)
     elif args.books: # search books
-        books = retrieve_data(db, db.books_table, query=args.books)
-        print_entries(books, db.books_table)
+        books = retrieve_data(books_table, query=args.books)
+        print_entries(books, books_table)
     elif args.quotes: # show quotes
-        quotes = retrieve_data(db, db.quotes_table, query=args.quotes)
-        print_entries(quotes, db.quotes_table)
+        quotes = retrieve_data(quotes_table, query=args.quotes)
+        print_entries(quotes, quotes_table)
     else:
         parser.print_help()
 

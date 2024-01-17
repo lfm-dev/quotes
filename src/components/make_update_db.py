@@ -1,7 +1,7 @@
 import os
 from classes.Quote import Quote
 from classes.Book import Book
-from components.api import create_table, insert_data
+from components.api import insert_data
 
 def read_md_file(md_file_name):
     quotes = {}
@@ -28,14 +28,9 @@ def read_md_file(md_file_name):
 def get_book_data(line):
     return line[1:].strip().split('/')
 
-def create_tables(db):
-    create_table(db, 'books', 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
-    create_table(db, 'quotes', 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'book_name TEXT', 'quote TEXT')
-
-def make_update_db(db):
-    create_tables(db)
+def make_update_db(books_table, quotes_table):
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
     for md_file_name in quotes_files:
         books, quotes = read_md_file(md_file_name)
-        insert_data(db, 'books', books)
-        insert_data(db, 'quotes', quotes)
+        insert_data(books_table, books)
+        insert_data(quotes_table, quotes)
