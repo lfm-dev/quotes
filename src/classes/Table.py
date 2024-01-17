@@ -26,6 +26,10 @@ class Table:
         self.DB.commit_and_close(con)
         return data
 
+    def entry_not_found(self, query):
+        print(f"'{query}' not found")
+        sys.exit(1)
+
 class BooksTable(Table):
 
     TABLE_NAME = 'books'
@@ -44,11 +48,11 @@ class BooksTable(Table):
     def get_books(self, query):
         sql_cmd = self.get_sql_cmd(query)
         data = super().retrieve_data(self.TABLE_NAME, sql_cmd)
-        if not data:
-            print(f"'{query}' not found")
-            sys.exit(1)
-        books = make_books(data)
 
+        if not data:
+            super().entry_not_found(query)
+
+        books = make_books(data)
         return books
 
     def get_sql_cmd(self, query):
@@ -72,11 +76,11 @@ class QuotesTable(Table):
     def get_quotes_by_bookid(self, query):
         sql_cmd = self.get_sql_cmd(query)
         data = super().retrieve_data(self.TABLE_NAME, sql_cmd)
-        if not data:
-            print(f"'{query}' not found")
-            sys.exit(1)
-        quotes = make_quotes(data)
 
+        if not data:
+            super().entry_not_found(query)
+
+        quotes = make_quotes(data)
         return quotes
 
     def get_sql_cmd(self, query):
