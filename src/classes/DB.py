@@ -1,5 +1,4 @@
 import sqlite3
-import sys
 
 class DB:
     DB_NAME = 'book_quotes.db'
