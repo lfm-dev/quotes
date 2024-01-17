@@ -5,7 +5,7 @@ from classes.Book import Book
 def read_md_file(md_file_name):
     quotes = {}
     books = {}
-    with open(md_file_name) as file_handle:
+    with open(md_file_name, encoding="utf-8") as file_handle:
         for line in file_handle:
             if not line.strip():
                 continue
