@@ -1,4 +1,6 @@
+import sys
 from classes.DB import DB
+from components.utils import make_books, make_quotes
 
 class Table:
     DB = DB()
@@ -9,7 +11,8 @@ class Table:
         cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name}({columns})""")
         self.DB.commit_and_close(con)
 
-    def insert_data(self, entries_data):
+    def insert_data(self, entries):
+        entries_data = [entry.get_data() for entry in entries]
         data_schema = '(' + ('?,'*len(entries_data[0]))[:-1] + ')' # e.g (?,?,?)
         cursor, con = self.DB.get_cursor_con()
         cursor.executemany(f'INSERT OR IGNORE INTO {self.TABLE_NAME} VALUES {data_schema}', entries_data)
@@ -26,25 +29,46 @@ class BooksTable(Table):
     TABLE_NAME = 'books'
 
     def __init__(self):
-        self.create_table(self.TABLE_NAME, 'book_id TEXT PRIMARY KEY', 'book_name TEXT', 'author TEXT', 'n_quotes INTEGER')
+        self.create_table(self.TABLE_NAME,
+        'book_id TEXT PRIMARY KEY',
+        'book_name TEXT',
+        'author TEXT',
+        'n_quotes INTEGER'
+        )
 
-    def retrieve_data(self, query):
+    def get_books(self, query):
         sql_cmd = self.get_sql_cmd(query)
-        return super().retrieve_data(sql_cmd)
+        data = super().retrieve_data(sql_cmd)
+        if not data:
+            print(f"'{query}' not found")
+            sys.exit(1)
+        books = make_books(data)
+
+        return books
 
     def get_sql_cmd(self, query):
         return '' if query == 'all' else f"WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'"
-
 
 class QuotesTable(Table):
     TABLE_NAME = 'quotes'
 
     def __init__(self):
-        self.create_table(self.TABLE_NAME, 'quote_id TEXT PRIMARY KEY', 'book_id TEXT', 'book_name TEXT', 'quote TEXT')
+        self.create_table(self.TABLE_NAME,
+        'quote_id TEXT PRIMARY KEY',
+        'book_id TEXT',
+        'book_name TEXT',
+        'quote TEXT'
+        )
 
-    def retrieve_data(self, query):
+    def get_quotes_by_bookid(self, query):
         sql_cmd = self.get_sql_cmd(query)
-        return super().retrieve_data(sql_cmd)
+        data = super().retrieve_data(sql_cmd)
+        if not data:
+            print(f"'{query}' not found")
+            sys.exit(1)
+        quotes = make_quotes(data)
+
+        return quotes
 
     def get_sql_cmd(self, query):
         return f"WHERE book_id LIKE '{query}'"
