@@ -3,6 +3,7 @@ from classes.DB import DB
 from components.utils import make_books, make_quotes
 
 class Table:
+
     DB = DB()
 
     def create_table(self, table_name, *columns):
@@ -11,21 +12,22 @@ class Table:
         cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name}({columns})""")
         self.DB.commit_and_close(con)
 
-    def insert_data(self, entries):
+    def insert_data(self, table_name, entries):
         entries_data = [entry.get_data() for entry in entries]
         data_schema = '(' + ('?,'*len(entries_data[0]))[:-1] + ')' # e.g (?,?,?)
         cursor, con = self.DB.get_cursor_con()
-        cursor.executemany(f'INSERT OR IGNORE INTO {self.TABLE_NAME} VALUES {data_schema}', entries_data)
+        cursor.executemany(f'INSERT OR IGNORE INTO {table_name} VALUES {data_schema}', entries_data)
         self.DB.commit_and_close(con)
 
-    def retrieve_data(self, sql_cmd):
+    def retrieve_data(self, table_name, sql_cmd):
         cursor, con = self.DB.get_cursor_con()
-        cursor.execute(f"SELECT * FROM {self.TABLE_NAME} {sql_cmd}")
+        cursor.execute(f"SELECT * FROM {table_name} {sql_cmd}")
         data = cursor.fetchall()
         self.DB.commit_and_close(con)
         return data
 
 class BooksTable(Table):
+
     TABLE_NAME = 'books'
 
     def __init__(self):
@@ -36,9 +38,12 @@ class BooksTable(Table):
         'n_quotes INTEGER'
         )
 
+    def add_books(self, books):
+        super().insert_data(self.TABLE_NAME, books)
+
     def get_books(self, query):
         sql_cmd = self.get_sql_cmd(query)
-        data = super().retrieve_data(sql_cmd)
+        data = super().retrieve_data(self.TABLE_NAME, sql_cmd)
         if not data:
             print(f"'{query}' not found")
             sys.exit(1)
@@ -50,6 +55,7 @@ class BooksTable(Table):
         return '' if query == 'all' else f"WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'"
 
 class QuotesTable(Table):
+
     TABLE_NAME = 'quotes'
 
     def __init__(self):
@@ -60,9 +66,12 @@ class QuotesTable(Table):
         'quote TEXT'
         )
 
+    def add_quotes(self, quotes):
+        super().insert_data(self.TABLE_NAME, quotes)
+
     def get_quotes_by_bookid(self, query):
         sql_cmd = self.get_sql_cmd(query)
-        data = super().retrieve_data(sql_cmd)
+        data = super().retrieve_data(self.TABLE_NAME, sql_cmd)
         if not data:
             print(f"'{query}' not found")
             sys.exit(1)

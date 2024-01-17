@@ -31,5 +31,5 @@ def make_update_db(books_table, quotes_table):
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
     for md_file_name in quotes_files:
         books, quotes = read_md_file(md_file_name)
-        books_table.insert_data(books)
-        quotes_table.insert_data(quotes)
+        books_table.add_books(books)
+        quotes_table.add_quotes(quotes)
