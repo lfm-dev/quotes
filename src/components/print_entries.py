@@ -17,6 +17,6 @@ def print_books_table(books):
     console.print(table)
 
 def print_quotes_markdown(quotes):
-    quotes_markdown = Markdown(f'# {quotes[0].book_name}\n{(os.linesep).join(["* " + quote.quote for quote in quotes])}')
+    quotes_markdown = Markdown(f'# {quotes[0].book_name}\n{(os.linesep).join([f"* {quote.quote}" for quote in quotes])}')
     console = Console()
     console.print(quotes_markdown)
