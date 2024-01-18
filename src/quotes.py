@@ -1,6 +1,6 @@
 import os
 from classes.Table import BooksTable, QuotesTable
-from components.print_table import print_entries
+from components.print_entries import print_books_table, print_quotes_markdown
 from components.make_update_db import make_update_db
 from components.utils import get_args
 
@@ -15,12 +15,12 @@ def main():
     args, parser = get_args()
     if args.makedb: # make (or update) sqlite3 db
         make_update_db(books_table, quotes_table)
-    elif args.books: # search books
-        books = books_table.get_books(query=args.books)
-        print_entries(books, books_table)
-    elif args.quotes: # show quotes
-        quotes = quotes_table.get_quotes_by_bookid(query=args.quotes)
-        print_entries(quotes, quotes_table)
+    elif args.books:
+        books = books_table.get_books(query=args.books) # query: book_name or author
+        print_books_table(books)
+    elif args.quotes:
+        quotes = quotes_table.get_quotes_by_bookid(query=args.quotes) # query: book_id
+        print_quotes_markdown(quotes)
     else:
         parser.print_help()
 

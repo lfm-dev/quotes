@@ -1,6 +1,7 @@
 import sqlite3
 
 class DB:
+
     DB_NAME = 'book_quotes.db'
 
     def get_conection(self):
