@@ -2,7 +2,7 @@ import os
 from classes.Table import BooksTable, QuotesTable
 from components.print_entries import print_books_table, print_quotes_markdown
 from components.make_update_db import make_update_db
-from components.utils import get_args
+from components.get_args import get_args
 
 #TODO installation script
 QUOTES_PATH = '/path/to/your/quotes/folder'

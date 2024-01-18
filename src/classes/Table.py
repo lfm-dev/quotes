@@ -1,6 +1,7 @@
 import sys
 from classes.DB import DB
-from components.utils import make_books, make_quotes
+from classes.Book import Book
+from classes.Quote import Quote
 
 class Table:
 
@@ -52,7 +53,7 @@ class BooksTable(Table):
         if not data:
             super().entry_not_found(query)
 
-        books = make_books(data)
+        books = [Book(book_id = book[0], book_name = book[1], author = book[2], n_quotes = book[3]) for book in data]
         return books
 
     def get_sql_cmd(self, query):
@@ -80,7 +81,7 @@ class QuotesTable(Table):
         if not data:
             super().entry_not_found(query)
 
-        quotes = make_quotes(data)
+        quotes = [Quote(quote_id = quote[0], book_id = quote[1], book_name = quote[2], quote = quote[3]) for quote in data]
         return quotes
 
     def get_sql_cmd(self, query):
