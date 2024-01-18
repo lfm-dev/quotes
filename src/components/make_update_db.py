@@ -21,8 +21,10 @@ def read_md_file(md_file_name):
                 quotes[book_id][-1] += line.lstrip('* ')
             else:
                 quotes[book_id][-1] += line
-    quotes = [Quote(f'{n}-{book_id}', book_id, books[book_id].book_name, quote) for book_id in quotes for n, quote in enumerate(quotes[book_id]) if len(quotes[book_id]) > 0]
-    books = [books[book_id] for book_id in books if books[book_id].n_quotes > 0]
+
+    quotes = [Quote(f'{n}-{book_id}', book_id, books[book_id].book_name, quote) for book_id, quote_list in quotes.items() for n, quote in enumerate(quote_list) if quote_list]
+    books = [book for book_id, book in books.items() if book.n_quotes > 0]
+
     return books, quotes
 
 def get_book_data(line):

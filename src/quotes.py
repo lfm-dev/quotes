@@ -5,6 +5,7 @@ from components.make_update_db import make_update_db
 from components.get_args import get_args
 
 #TODO installation script
+#TODO remove book_name from Quote (get from BooksTable)
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
