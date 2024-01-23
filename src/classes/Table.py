@@ -49,10 +49,8 @@ class BooksTable(Table):
     def get_books(self, query):
         sql_cmd = self.get_sql_cmd(query)
         data = super().retrieve_data(self.TABLE_NAME, sql_cmd)
-
         if not data:
             super().entry_not_found(query)
-
         books = [Book(book_id = book[0], book_name = book[1], author = book[2], n_quotes = book[3]) for book in data]
         return books
 
@@ -81,10 +79,8 @@ class QuotesTable(Table):
     def get_quotes_by_bookid(self, query):
         sql_cmd = self.get_sql_cmd(query)
         data = super().retrieve_data(self.TABLE_NAME, sql_cmd)
-
         if not data:
             super().entry_not_found(query)
-
         quotes = [Quote(quote_id = quote[0], book_id = quote[1], quote = quote[2]) for quote in data]
         return quotes
 

@@ -22,8 +22,8 @@ def read_md_file(md_file_name):
             else:
                 quotes[book_id][-1] += line
 
-    quotes = [Quote(f'{n}-{book_id}', book_id, quote) for book_id, quote_list in quotes.items() for n, quote in enumerate(quote_list) if quote_list]
     books = [book for book_id, book in books.items() if book.n_quotes > 0]
+    quotes = [Quote(f'{n}-{book_id}', book_id, quote) for book_id, quote_list in quotes.items() for n, quote in enumerate(quote_list) if quote_list]
 
     return books, quotes
 
