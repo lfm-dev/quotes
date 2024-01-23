@@ -5,7 +5,6 @@ from components.make_update_db import make_update_db
 from components.get_args import get_args
 
 #TODO installation script
-#TODO remove book_name from Quote (get from BooksTable)
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
@@ -25,7 +24,8 @@ def main():
 
     elif args.quotes:
         quotes = quotes_table.get_quotes_by_bookid(query=args.quotes) # query: book_id
-        print_quotes_markdown(quotes)
+        book_name, author = books_table.get_book_name_author(book_id=quotes[0].book_id)
+        print_quotes_markdown(quotes, book_name, author)
 
     else:
         parser.print_help()

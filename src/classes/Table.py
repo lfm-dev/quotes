@@ -59,6 +59,11 @@ class BooksTable(Table):
     def get_sql_cmd(self, query):
         return '' if query == 'all' else f"WHERE book_name LIKE '%{query}%' OR author LIKE '%{query}%'"
 
+    def get_book_name_author(self, book_id):
+        book = super().retrieve_data(self.TABLE_NAME, f"WHERE book_id LIKE '{book_id}'")[0] # search through ID, only one book found
+        _, book_name, author, _ = book # ignore book_id and n_quotes
+        return book_name, author
+
 class QuotesTable(Table):
 
     TABLE_NAME = 'quotes'
@@ -67,7 +72,6 @@ class QuotesTable(Table):
         self.create_table(self.TABLE_NAME,
         'quote_id TEXT PRIMARY KEY',
         'book_id TEXT',
-        'book_name TEXT',
         'quote TEXT'
         )
 
@@ -81,7 +85,7 @@ class QuotesTable(Table):
         if not data:
             super().entry_not_found(query)
 
-        quotes = [Quote(quote_id = quote[0], book_id = quote[1], book_name = quote[2], quote = quote[3]) for quote in data]
+        quotes = [Quote(quote_id = quote[0], book_id = quote[1], quote = quote[2]) for quote in data]
         return quotes
 
     def get_sql_cmd(self, query):
