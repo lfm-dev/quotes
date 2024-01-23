@@ -20,6 +20,7 @@ def main():
 
     elif args.books:
         books = books_table.get_books(query=args.books) # query: book_name or author
+        #TODO if only one book, print quotes
         print_books_table(books)
 
     elif args.quotes:
