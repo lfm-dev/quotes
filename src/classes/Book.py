@@ -4,7 +4,6 @@ class Book:
         self.book_id = book_id
         self.book_name = book_name
         self.author = author
-        #TODO get n_quotes from quotes table
         self.n_quotes = n_quotes
 
     def get_data(self):
