@@ -1,6 +1,5 @@
 class Book:
     def __init__(self, book_id, book_name, author, n_quotes = 0):
-        #TODO make auto book_id
         self.book_id = book_id
         self.book_name = book_name
         self.author = author

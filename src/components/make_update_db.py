@@ -6,12 +6,16 @@ from classes.Book import Book
 def read_md_file(md_file_name):
     quotes = {}
     books = {}
+    year = md_file_name.split('-')[1].split('.')[0][-2:] # md name: books-year.md
     with open(md_file_name, encoding="utf-8") as file_handle:
+        book_number = 0
         for line in file_handle:
             if not line.strip():
                 continue
             if line.startswith('#'):
-                book_id, book_name, author = get_book_data(line)
+                book_number += 1
+                book_id = f'{year}-{book_number}'
+                book_name, author = get_book_data(line)
                 book = Book(book_id, book_name, author)
                 books[book.book_id] = book
                 quotes[book_id] = []
@@ -29,7 +33,7 @@ def read_md_file(md_file_name):
 
 def get_book_data(line):
     book_data = line[1:].strip().split('/')
-    if len(book_data) != 3:
+    if len(book_data) != 2:
         print(f'Wrong format in book header -> {line.strip()}\nCorrect format and run -makedb again')
         sys.exit(1)
     return book_data
