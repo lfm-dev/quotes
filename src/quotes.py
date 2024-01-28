@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import os
 from classes.Table import BooksTable, QuotesTable
 from components.print_entries import print_books_table, print_quotes_markdown
