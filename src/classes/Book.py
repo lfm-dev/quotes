@@ -3,6 +3,7 @@ class Book:
         self.book_id = book_id
         self.book_name = book_name
         self.author = author
+        self.year_read = int(book_id.split('-')[0])
         self.n_quotes = n_quotes
 
     def get_data(self):
