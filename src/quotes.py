@@ -16,12 +16,12 @@ def main():
 
     args, parser = get_args()
 
-    if args.makedb:
+    if args.make_update_db:
         make_update_db(books_table, quotes_table)
 
-    elif args.print_books:
-        query = args.print_books # query: book_name or author
-        books = books_table.get_books(query=query)
+    elif args.show_books:
+        book_name_author = args.show_books
+        books = books_table.get_books(query=book_name_author)
         if len(books) == 1: # if only one book was found, print quotes
             quotes = quotes_table.get_quotes_by_bookid(book_id=books[0].book_id)
             book_name, author = books_table.get_book_name_author(book_id=books[0].book_id)
@@ -29,8 +29,8 @@ def main():
         else:
             print_books_table(books)
 
-    elif args.print_quotes:
-        book_id = args.print_quotes
+    elif args.show_quotes:
+        book_id = args.show_quotes
         quotes = quotes_table.get_quotes_by_bookid(book_id=book_id)
         book_name, author = books_table.get_book_name_author(book_id=quotes[0].book_id)
         print_quotes_markdown(quotes, book_name, author)
