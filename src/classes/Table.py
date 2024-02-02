@@ -76,13 +76,13 @@ class QuotesTable(Table):
     def add_quotes(self, quotes):
         super().insert_data(self.TABLE_NAME, quotes)
 
-    def get_quotes_by_bookid(self, query):
-        sql_cmd = self.get_sql_cmd(query)
+    def get_quotes_by_bookid(self, book_id):
+        sql_cmd = self.get_sql_cmd(book_id)
         data = super().retrieve_data(self.TABLE_NAME, sql_cmd)
         if not data:
-            super().entry_not_found(query)
+            super().entry_not_found(book_id)
         quotes = [Quote(quote_id = quote[0], book_id = quote[1], quote = quote[2]) for quote in data]
         return quotes
 
-    def get_sql_cmd(self, query):
-        return f"WHERE book_id LIKE '{query}'"
+    def get_sql_cmd(self, book_id):
+        return f"WHERE book_id LIKE '{book_id}'"

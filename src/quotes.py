@@ -19,17 +19,19 @@ def main():
     if args.makedb:
         make_update_db(books_table, quotes_table)
 
-    elif args.books:
-        books = books_table.get_books(query=args.books) # query: book_name or author
+    elif args.print_books:
+        query = args.print_books # query: book_name or author
+        books = books_table.get_books(query=query)
         if len(books) == 1: # if only one book was found, print quotes
-            quotes = quotes_table.get_quotes_by_bookid(query=books[0].book_id) # query: book_id
+            quotes = quotes_table.get_quotes_by_bookid(book_id=books[0].book_id)
             book_name, author = books_table.get_book_name_author(book_id=books[0].book_id)
             print_quotes_markdown(quotes, book_name, author)
         else:
             print_books_table(books)
 
-    elif args.quotes:
-        quotes = quotes_table.get_quotes_by_bookid(query=args.quotes) # query: book_id
+    elif args.print_quotes:
+        book_id = args.print_quotes
+        quotes = quotes_table.get_quotes_by_bookid(book_id=book_id)
         book_name, author = books_table.get_book_name_author(book_id=quotes[0].book_id)
         print_quotes_markdown(quotes, book_name, author)
 
