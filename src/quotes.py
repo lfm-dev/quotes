@@ -22,9 +22,11 @@ def main():
     elif args.show_books:
         book_name_author = args.show_books
         books = books_table.get_books(query=book_name_author)
+
         if len(books) == 1: # if only one book was found, print quotes
-            quotes = quotes_table.get_quotes_by_bookid(book_id=books[0].book_id)
-            book_name, author = books_table.get_book_name_author(book_id=books[0].book_id)
+            book_id = books[0].book_id
+            quotes = quotes_table.get_quotes_by_bookid(book_id=book_id)
+            book_name, author = books_table.get_book_name_author(book_id=book_id)
             print_quotes_markdown(quotes, book_name, author)
         else:
             print_books_table(books)
@@ -32,7 +34,7 @@ def main():
     elif args.show_quotes:
         book_id = args.show_quotes
         quotes = quotes_table.get_quotes_by_bookid(book_id=book_id)
-        book_name, author = books_table.get_book_name_author(book_id=quotes[0].book_id)
+        book_name, author = books_table.get_book_name_author(book_id=book_id)
         print_quotes_markdown(quotes, book_name, author)
 
     else:
