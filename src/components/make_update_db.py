@@ -15,7 +15,7 @@ def read_md_file(md_file_name):
             if line.startswith('#'):
                 book_number += 1
                 book_id = f'{year}-{book_number}'
-                book_name, author = get_book_name_author(line)
+                book_name, author = get_book_name_author(line, md_file_name)
                 book = Book(book_id, book_name, author)
                 books[book.book_id] = book
                 quotes[book_id] = []
@@ -30,13 +30,15 @@ def read_md_file(md_file_name):
 
     return books, quotes
 
-def get_book_name_author(line):
-    book_data = line[1:].strip().split('/')
-    if len(book_data) != 2:
-        print(f'Wrong format in book header -> {line.strip()}')
+def get_book_name_author(line, file_name):
+    try:
+        book_name, author = line.strip('#\n').split('/')
+    except ValueError:
+        print(f'Wrong format in book header -> {line.strip()} in {file_name}')
+        print('The format should be book_name/author')
         print('Correct format and run -makedb again')
         sys.exit(1)
-    return book_data
+    return book_name, author
 
 def make_update_db(books_table, quotes_table):
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
