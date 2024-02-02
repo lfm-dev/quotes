@@ -15,7 +15,8 @@ class Table:
 
     def insert_data(self, table_name, entries):
         entries_data = [entry.get_data() for entry in entries]
-        data_schema = '(' + ('?,'*len(entries_data[0]))[:-1] + ')' # e.g (?,?,?)
+        n_fields = len(entries_data[0])
+        data_schema = f'({(",").join(["?"]*n_fields)})' # e.g (?,?,?)
         cursor, con = self.DB.get_cursor_con()
         cursor.executemany(f'INSERT OR IGNORE INTO {table_name} VALUES {data_schema}', entries_data)
         self.DB.commit_and_close(con)
