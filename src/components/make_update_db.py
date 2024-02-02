@@ -19,10 +19,9 @@ def read_md_file(md_file_name):
                 book = Book(book_id, book_name, author)
                 books[book.book_id] = book
                 quotes[book_id] = []
-            elif line.startswith('*'):
+            elif line.startswith('*'): # new quote starts
                 book.n_quotes += 1
-                quotes[book_id].append('')
-                quotes[book_id][-1] += line.lstrip('* ')
+                quotes[book_id].append(line.lstrip('* '))
             else:
                 quotes[book_id][-1] += line
 
