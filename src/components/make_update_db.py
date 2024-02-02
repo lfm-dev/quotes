@@ -33,7 +33,8 @@ def read_md_file(md_file_name):
 def get_book_name_author(line):
     book_data = line[1:].strip().split('/')
     if len(book_data) != 2:
-        print(f'Wrong format in book header -> {line.strip()}\nCorrect format and run -makedb again')
+        print(f'Wrong format in book header -> {line.strip()}')
+        print('Correct format and run -makedb again')
         sys.exit(1)
     return book_data
 
