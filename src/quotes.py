@@ -6,6 +6,7 @@ from components.make_update_db import make_update_db
 from components.get_args import get_args
 
 #TODO add book tags support
+#TODO add authors table
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
