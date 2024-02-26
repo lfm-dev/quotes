@@ -6,7 +6,7 @@ from classes.Book import Book
 def read_md_file(md_file_name):
     quotes = {}
     books = {}
-    year = md_file_name.split('-')[1].split('.')[0][-2:] # md name: books-year.md
+    year = md_file_name.split('.')[0][-2:] # md name: year.md, get only last two digits
     with open(md_file_name, encoding="utf-8") as file_handle:
         book_number = 0
         for line in file_handle:
