@@ -7,6 +7,7 @@ from components.get_args import get_args
 
 #TODO add book tags support
 #TODO add authors table
+#TODO drop sqlite
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
