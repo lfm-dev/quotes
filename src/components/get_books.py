@@ -19,7 +19,6 @@ def read_md_file(md_file_name):
                 books[book_id].quotes.append(line.lstrip('* '))
             else:
                 books[book_id].quotes[-1] += line
-
     return books
 
 def get_book_name_author(line, file_name):
@@ -32,7 +31,7 @@ def get_book_name_author(line, file_name):
         sys.exit(1)
     return book_name, author
 
-def get_book_quotes():
+def get_books():
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
     books = {}
     for md_file_name in quotes_files:
