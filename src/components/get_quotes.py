@@ -1,10 +1,8 @@
 import os
 import sys
-from classes.Quote import Quote
 from classes.Book import Book
 
 def read_md_file(md_file_name):
-    quotes = {}
     books = {}
     year = md_file_name.split('.')[0][-2:] # md name: year.md, get only last two digits
     with open(md_file_name, encoding="utf-8") as file_handle:
@@ -16,19 +14,13 @@ def read_md_file(md_file_name):
                 book_number += 1
                 book_id = f'{year}-{book_number}'
                 book_name, author = get_book_name_author(line, md_file_name)
-                book = Book(book_id, book_name, author)
-                books[book.book_id] = book
-                quotes[book_id] = []
+                books[book_id] = Book(book_id, book_name, author)
             elif line.startswith('*'): # new quote starts
-                book.n_quotes += 1
-                quotes[book_id].append(line.lstrip('* '))
+                books[book_id].quotes.append(line.lstrip('* '))
             else:
-                quotes[book_id][-1] += line
+                books[book_id].quotes[-1] += line
 
-    books = [book for book_id, book in books.items() if book.n_quotes > 0]
-    quotes = [Quote(f'{n}-{book_id}', book_id, quote) for book_id, quote_list in quotes.items() for n, quote in enumerate(quote_list) if quote_list]
-
-    return books, quotes
+    return books
 
 def get_book_name_author(line, file_name):
     try:
@@ -40,10 +32,9 @@ def get_book_name_author(line, file_name):
         sys.exit(1)
     return book_name, author
 
-def make_update_db(books_table, quotes_table):
+def get_book_quotes():
     quotes_files = sorted([xfile for xfile in os.listdir(os.curdir) if xfile.endswith('.md')])
+    books = {}
     for md_file_name in quotes_files:
-        books, quotes = read_md_file(md_file_name)
-        if books and quotes:
-            books_table.add_books(books)
-            quotes_table.add_quotes(quotes)
+        books = {**books, **read_md_file(md_file_name)}
+    return books
