@@ -18,7 +18,7 @@ def read_md_file(md_file_name):
             elif line.startswith('*'): # new quote starts
                 books[book_id].quotes.append(line.lstrip('* '))
             else:
-                books[book_id].quotes[-1] += line
+                books[book_id].quotes[-1] +=  '\n  ' + line # newline in markdown
     return books
 
 def get_book_name_author(line, file_name):
