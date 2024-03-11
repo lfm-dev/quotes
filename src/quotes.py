@@ -7,6 +7,7 @@ from components.print_entries import print_books_table, print_quotes_markdown, p
 from components.get_args import get_args
 
 #TODO add book tags support
+#TODO add tags to authors table
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
