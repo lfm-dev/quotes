@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 import os
 from components.get_books import get_books
+from components.get_authors import get_authors
 from components.filter_books import filter_by_author_book_name
-from components.print_entries import print_books_table, print_quotes_markdown
+from components.print_entries import print_books_table, print_quotes_markdown, print_authors_table
 from components.get_args import get_args
 
 #TODO add book tags support
-#TODO add authors table
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
@@ -33,6 +33,10 @@ def main():
             print_quotes_markdown(book)
         else:
             print('Book not found.')
+
+    elif args.show_authors:
+        authors = get_authors(books)
+        print_authors_table(authors)
 
     else:
         parser.print_help()

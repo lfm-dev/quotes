@@ -3,6 +3,17 @@ from rich.table import Table
 from rich.console import Console
 from rich.markdown import Markdown
 
+def print_authors_table(authors):
+    table = Table(show_header=True, header_style='bold green')
+    table.add_column('Name', justify='left')
+    table.add_column('Books', justify='center')
+
+    for author in authors:
+        table.add_row(author.name, str(len(author.books)), end_section=True)
+
+    console = Console()
+    console.print(table)
+
 def print_books_table(books):
     table = Table(show_header=True, header_style='bold green')
     table.add_column('ID', justify='left')
