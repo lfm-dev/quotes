@@ -16,7 +16,7 @@ def main():
     books = get_books()
 
     if args.show_books:
-        query = args.show_books
+        query = args.show_books.strip()
         filtered_books = filter_books(books, query)
 
         if len(filtered_books) == 1: # if only one book was found, print quotes
