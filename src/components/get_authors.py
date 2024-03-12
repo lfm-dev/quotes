@@ -8,6 +8,7 @@ def get_authors(books):
         else:
             author = Author(book.author)
             author.books.append(book)
+            author.tags += list(set(author.tags + book.tags))
             authors[book.author] = author
 
     authors = list(authors.values())

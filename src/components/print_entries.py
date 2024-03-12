@@ -7,9 +7,11 @@ def print_authors_table(authors):
     table = Table(show_header=True, header_style='bold green')
     table.add_column('Name', justify='left')
     table.add_column('Books', justify='center')
+    table.add_column('Tags', justify='center')
 
     for author in authors:
-        table.add_row(author.name, str(len(author.books)), end_section=True)
+        author_tags = (' ').join(sorted(author.tags)) if author.tags else '---'
+        table.add_row(author.name, str(len(author.books)), author_tags, end_section=True)
 
     console = Console()
     console.print(table)

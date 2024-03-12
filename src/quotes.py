@@ -7,7 +7,6 @@ from components.filter_books import filter_books
 from components.print_entries import print_books_table, print_quotes_markdown, print_authors_table, print_tags_table
 from components.get_args import get_args
 
-#TODO add tags to authors table
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
 def main():
