@@ -14,6 +14,18 @@ def print_authors_table(authors):
     console = Console()
     console.print(table)
 
+def print_tags_table(tags):
+    sorted_tags = sorted(list(tags.keys()))
+    table = Table(show_header=True, header_style='bold green')
+    table.add_column('Tag', justify='left')
+    table.add_column('Books', justify='center')
+
+    for tag in sorted_tags:
+        table.add_row(tag, str(tags[tag]))
+
+    console = Console()
+    console.print(table)
+
 def print_books_table(books):
     table = Table(show_header=True, header_style='bold green')
     table.add_column('ID', justify='left')

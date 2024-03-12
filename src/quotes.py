@@ -2,11 +2,11 @@
 import os
 from components.get_books import get_books
 from components.get_authors import get_authors
+from components.get_tags import get_tags
 from components.filter_books import filter_books
-from components.print_entries import print_books_table, print_quotes_markdown, print_authors_table
+from components.print_entries import print_books_table, print_quotes_markdown, print_authors_table, print_tags_table
 from components.get_args import get_args
 
-#TODO add book tags support
 #TODO add tags to authors table
 QUOTES_PATH = '/path/to/your/quotes/folder'
 
@@ -38,6 +38,10 @@ def main():
     elif args.show_authors:
         authors = get_authors(books)
         print_authors_table(authors)
+
+    elif args.show_tags:
+        tags = get_tags(books)
+        print_tags_table(tags)
 
     else:
         parser.print_help()
