@@ -5,6 +5,7 @@ class Book:
         self.author = author
         self.year_read = self.get_year_read()
         self.quotes = []
+        self.tags = []
 
     def get_data(self):
         return (self.book_id, self.book_name, self.author)
