@@ -2,7 +2,7 @@
 import os
 from components.get_books import get_books
 from components.get_authors import get_authors
-from components.filter_books import filter_by_author_book_name
+from components.filter_books import filter_books
 from components.print_entries import print_books_table, print_quotes_markdown, print_authors_table
 from components.get_args import get_args
 
@@ -17,8 +17,8 @@ def main():
     books = get_books()
 
     if args.show_books:
-        book_name_author = args.show_books
-        filtered_books = filter_by_author_book_name(books, book_name_author)
+        query = args.show_books
+        filtered_books = filter_books(books, query)
 
         if len(filtered_books) == 1: # if only one book was found, print quotes
             print_quotes_markdown(filtered_books[0])

@@ -18,7 +18,7 @@ def read_md_file(md_file_name):
             elif line.startswith('*'): # new quote starts
                 books[book_id].quotes.append(line.lstrip('* '))
             elif line.startswith('[') and line.strip().endswith(']'):
-                books[book_id].tags = line.strip('[]\n').split(',')
+                books[book_id].tags = line.lower().strip('[]\n').split(',')
             else:
                 books[book_id].quotes[-1] +=  '\n  ' + line # newline in markdown
     return books
