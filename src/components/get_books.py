@@ -15,10 +15,10 @@ def read_md_file(md_file_name):
                 book_id = f'{year}-{book_number}'
                 book_name, author = get_book_name_author(line, md_file_name)
                 books[book_id] = Book(book_id, book_name, author)
-            elif line.startswith('*'): # new quote starts
-                books[book_id].quotes.append(line.lstrip('* '))
             elif line.startswith('[') and line.strip().endswith(']'):
                 books[book_id].tags = line.lower().strip('[]\n').split(',')
+            elif line.startswith('*'): # new quote starts
+                books[book_id].quotes.append(line.lstrip('* '))
             else:
                 books[book_id].quotes[-1] +=  '\n  ' + line # newline in markdown
     return books
