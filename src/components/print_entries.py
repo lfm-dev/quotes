@@ -37,7 +37,7 @@ def print_books_table(books):
 
     for n_book, book in enumerate(books):
         end_section = True if n_book == len(books)-1 else book.year_read != books[n_book+1].year_read # line between books read in different years
-        book_tags = (" ").join(book.tags) if book.tags else "---"
+        book_tags = (' ').join(book.tags) if book.tags else '---'
         table.add_row(book.book_id, book.book_name, book.author, book_tags, end_section=end_section)
 
     console = Console()
