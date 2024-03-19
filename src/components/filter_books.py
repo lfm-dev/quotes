@@ -4,6 +4,6 @@ def filter_books(books, query):
     '''
     filtered_books = []
     for book in books.values():
-        if query.casefold() in book.book_name.casefold() or query.casefold() in book.author.casefold() or query.casefold() in book.tags or not query:
+        if query in book.book_name.casefold() or query in book.author.casefold() or query in book.tags or not query:
             filtered_books.append(book)
     return filtered_books
