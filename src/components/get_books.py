@@ -4,7 +4,7 @@ from classes.Book import Book
 
 def read_md_file(md_file_name):
     books = {}
-    year = md_file_name.split('.')[0][-2:] # md name: year.md, get only last two digits
+    year = md_file_name.split('.')[0] # md name: year.md
     with open(md_file_name, encoding="utf-8") as file_handle:
         book_number = 0
         for line in file_handle:
@@ -12,9 +12,9 @@ def read_md_file(md_file_name):
                 continue
             if line.startswith('#'):
                 book_number += 1
-                book_id = f'{year}-{book_number}'
+                book_id = f'{year[-2:]}-{book_number}'
                 book_name, author = get_book_name_author(line, md_file_name)
-                books[book_id] = Book(book_id, book_name, author)
+                books[book_id] = Book(book_id, book_name, author, year)
             elif line.startswith('[') and line.strip().endswith(']'):
                 books[book_id].tags = line.lower().strip('[]\n').split(',')
             elif line.startswith('*'): # new quote starts

@@ -1,11 +1,25 @@
+def hit(book, query):
+    if query == book.book_id:
+        return True
+    if query in book.book_name.casefold():
+        return True
+    if query in book.author.casefold():
+        return True
+    if query in book.tags:
+        return True
+    if query == book.reading_year:
+        return True
+    return False
+
 def filter_books(books, query):
     '''
     filter books by book name, author or tag
     '''
-    filtered_books = []
-    for book in books.values():
-        if not query:
-            filtered_books = list(books.values())
-        elif query in book.book_name.casefold() or query in book.author.casefold() or query in book.tags:
-            filtered_books.append(book)
+    if not query: # print all books
+        filtered_books = list(books.values())
+    else:
+        filtered_books = []
+        for book in books.values():
+            if hit(book, query):
+                filtered_books.append(book)
     return filtered_books
