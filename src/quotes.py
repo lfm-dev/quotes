@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import os
+from components.get_settings import SETTINGS
 from components.get_books import get_books
 from components.get_authors import get_authors
 from components.get_tags import get_tags
@@ -7,10 +8,8 @@ from components.filter_books import filter_books
 from components.print_entries import print_books_table, print_quotes_markdown, print_authors_table, print_tags_table
 from components.get_args import get_args
 
-QUOTES_PATH = '/path/to/your/quotes/folder'
-
 def main():
-    os.chdir(QUOTES_PATH)
+    os.chdir(SETTINGS['quotes_path'])
 
     args, parser = get_args()
     books = get_books()
