@@ -3,7 +3,7 @@ import os
 from components.get_settings import SETTINGS
 from components.get_books import get_books
 from components.get_authors import get_authors
-from components.get_tags import get_tags
+from components.get_all_tags import get_tags
 from components.filter_books import filter_books
 from components.filter_quotes import filter_quotes
 from components.print_entries import print_books_table, print_book_quotes_markdown, print_authors_table, print_tags_table, print_quotes_markdown
