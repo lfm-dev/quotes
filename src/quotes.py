@@ -5,7 +5,8 @@ from components.get_books import get_books
 from components.get_authors import get_authors
 from components.get_tags import get_tags
 from components.filter_books import filter_books
-from components.print_entries import print_books_table, print_quotes_markdown, print_authors_table, print_tags_table
+from components.filter_quotes import filter_quotes
+from components.print_entries import print_books_table, print_book_quotes_markdown, print_authors_table, print_tags_table, print_quotes_markdown
 from components.get_args import get_args
 
 def main():
@@ -19,19 +20,19 @@ def main():
         filtered_books = filter_books(books, query)
 
         if len(filtered_books) == 1: # if only one book was found, print quotes
-            print_quotes_markdown(filtered_books[0])
+            print_book_quotes_markdown(filtered_books[0])
         elif len(filtered_books) > 1:
             print_books_table(filtered_books)
         else:
             print('No books found.')
 
     elif args.show_quotes:
-        book_id = args.show_quotes
-        book = books.get(book_id)
-        if book:
-            print_quotes_markdown(book)
+        query = args.show_quotes
+        quotes = filter_quotes(books, query)
+        if quotes:
+            print_quotes_markdown(quotes)
         else:
-            print('Book not found.')
+            print('Quotes not found.')
 
     elif args.show_authors:
         authors = get_authors(books)
