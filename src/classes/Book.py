@@ -7,8 +7,5 @@ class Book:
         self.quotes = []
         self.tags = []
 
-    def get_data(self):
-        return (self.book_id, self.book_name, self.author)
-
     def __repr__(self):
         return f'{self.book_id} {self.book_name} {self. author}'
