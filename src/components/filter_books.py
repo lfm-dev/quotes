@@ -1,6 +1,8 @@
 def hit(book, query):
     if query == book.book_id:
         return True
+    if query == 'favs' and book.is_favorite:
+        return True
     if query in book.book_name.casefold().split():
         return True
     if query in book.author.casefold().split():
