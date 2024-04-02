@@ -31,6 +31,7 @@ def print_tags_table(tags):
 def print_books_table(books):
     table = Table(show_header=True, header_style='bold green')
     table.add_column('ID', justify='left')
+    table.add_column('F', justify='center')
     table.add_column('Name', justify='left')
     table.add_column('Author', justify='left')
     table.add_column('Tags', justify='center')
@@ -38,7 +39,8 @@ def print_books_table(books):
     for n_book, book in enumerate(books):
         end_section = True if n_book == len(books)-1 else book.reading_year != books[n_book+1].reading_year # line between books read in different years
         book_tags = (' ').join(book.tags) if book.tags else '---'
-        table.add_row(book.book_id, book.book_name, book.author, book_tags, end_section=end_section)
+        is_favorite = '*' if book.is_favorite else ''
+        table.add_row(book.book_id, is_favorite, book.book_name, book.author, book_tags, end_section=end_section)
 
     console = Console()
     console.print(table)
