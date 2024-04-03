@@ -1,8 +1,6 @@
 def hit(book, query):
     if query == book.book_id:
         return True
-    if query == 'favs' and book.is_favorite:
-        return True
     if query in book.book_name.casefold().split():
         return True
     if query in book.author.casefold().split():
@@ -17,11 +15,13 @@ def filter_books(books, query):
     '''
     filter books by book name, author or tag
     '''
+    book_list = list(books.values())
+
     if not query: # print all books
-        filtered_books = list(books.values())
+        filtered_books = book_list
+    elif query == 'favs':
+        filtered_books = [book for book in book_list if book.is_favorite]
     else:
-        filtered_books = []
-        for book in books.values():
-            if hit(book, query):
-                filtered_books.append(book)
+        filtered_books = [book for book in book_list if hit(book, query)]
+
     return filtered_books
