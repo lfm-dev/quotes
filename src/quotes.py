@@ -9,6 +9,8 @@ from components.filter_quotes import filter_quotes
 from components.print_entries import print_books_table, print_book_quotes_markdown, print_authors_table, print_tags_table, print_quotes_markdown
 from components.get_args import get_args
 
+#TODO README.md
+
 def main():
     os.chdir(SETTINGS['quotes_path'])
 
