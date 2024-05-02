@@ -3,16 +3,19 @@
 Manage your book quotes.
 
 ![books_table](./img/books_table.png)  
-![authors_table](./img/authors_table.png)  
-![tags_table](./img/tags_table.png)
+![books_quotes](./img/book_quotes.png)  
 
 ## Features
 
 * Manage your book quotes in a simple way
 * Search by book name, author, reading year, tag or favorites
 * Search a query through all the quotes in the database
-* Show a list with all the authors
-* Show a list with all the tags
+* Show a table with all the authors
+* Show a table with all the tags
+
+## Dependencies
+
+* Rich
 
 ## Installation
 
