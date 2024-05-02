@@ -10,7 +10,7 @@ wget https://raw.githubusercontent.com/lfm-dev/quotes/main/install.sh && bash in
 
 ## Usage
 
-Each year should have a different markdown file, with the following format: YEAR.md  
+Each year should have a different markdown file, with the following format: YYYY.md  
 The .md files have to be written in the following way:
 
 ```markdown
