@@ -2,6 +2,10 @@
 
 Manage your book quotes.
 
+![books_table](./img/books_table.png)  
+![authors_table](./img/authors_table.png)  
+![tags_table](./img/tags_table.png)
+
 ## Features
 
 * Manage your book quotes in a simple way
@@ -18,6 +22,7 @@ wget https://raw.githubusercontent.com/lfm-dev/quotes/main/install.sh && bash in
 
 ## Usage
 
+Example files can be found in the examples folder.
 Each year should have a different markdown file, with the following format: YYYY.md  
 The .md files have to be written in the following way:
 
@@ -27,7 +32,6 @@ The .md files have to be written in the following way:
 
 * Quote 1. Here you can write your quote.
 You can use more than one line per quote, a new quote only begins with "*"
-
 * Quote 2. You can write as many quotes as you want.
 ```
 
