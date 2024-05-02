@@ -52,8 +52,16 @@ To mark a book as favorite, write an * at the end of the title line.
 | -h, --help   | show help          | - |
 | -b, -books   | search books       | book id, book name, author name, reading year or tag (empty to show all books, favs to show favorites)|
 | -q , -quotes | search quotes      | any word |
-| -a, -authors | show authors table | author name |
-| -t, -tags    | show tags table    | tag |
+| -a, -authors | show authors table | - |
+| -t, -tags    | show tags table    | - |
 
+### Examples
+
+```bash
+quotes -b [shows all books]
+quotes -b 24-2 [shows quotes of book with ID 24-2]
+quotes -b 2024 [shows books read in 2024]
+quotes -q life [shows quotes with the word "life" in it]
+```
 
 
