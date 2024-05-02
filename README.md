@@ -2,6 +2,14 @@
 
 Manage your book quotes.
 
+## Features
+
+* Manage your book quotes in a simple way
+* Search by book name, author, reading year, tag or favorites
+* Search a query through all the quotes in the database
+* Show a list with all the authors
+* Show a list with all the tags
+
 ## Installation
 
 ```bash
