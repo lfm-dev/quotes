@@ -24,7 +24,7 @@ You can use more than one line per quote, a new quote only begins with "*"
 ```
 
 Book tags are optional.
-To mark a book as favourite, write an * at the end of the title line.
+To mark a book as favorite, write an * at the end of the title line.
 
 ```markdown
 #Favorite Book Name/Book Author*
