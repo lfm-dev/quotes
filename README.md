@@ -15,7 +15,7 @@ Manage your book quotes.
 
 ## Dependencies
 
-* Rich
+* [Rich](https://pypi.org/project/rich/)
 
 ## Installation
 
