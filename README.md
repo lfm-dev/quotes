@@ -58,7 +58,7 @@ To mark a book as favorite, write an * at the end of the title line.
 ### Examples
 
 ```bash
-quotes -b [shows all books]
+quotes -b # shows all books
 quotes -b 24-2 [shows quotes of book with ID 24-2]
 quotes -b 2024 [shows books read in 2024]
 quotes -q life [shows quotes with the word "life" in it]
