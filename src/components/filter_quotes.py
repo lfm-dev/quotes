@@ -5,6 +5,5 @@ def filter_quotes(books, query):
     for book in books:
         for quote in book.quotes:
             if query in quote:
-                quote = Quote(book.book_name, book.author, quote)
-                quotes.append(quote)
+                quotes.append(Quote(book.book_name, book.author, quote))
     return quotes
