@@ -16,6 +16,8 @@ def read_md_file(md_file_name):
                 book_name, author, is_favorite = get_book_name_author(line, md_file_name)
                 books[book_id] = Book(book_id, book_name, author, year, is_favorite)
             elif line.startswith('[') and line.strip().endswith(']'):
+                if len(line.strip()) == 2: # line = []
+                    continue
                 books[book_id].tags = line.lower().strip('[]\n').split(',')
             elif line.startswith('*'): # new quote starts
                 books[book_id].quotes.append(line.lstrip('* '))
