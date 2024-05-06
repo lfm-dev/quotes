@@ -15,13 +15,12 @@ def filter_books(books, query):
     '''
     filter books by book name, author or tag
     '''
-    book_list = list(books.values())
 
     if not query: # print all books
-        filtered_books = book_list
-    elif query == 'favs':
-        filtered_books = [book for book in book_list if book.is_favorite]
+        return books
+    if query == 'favs':
+        filtered_books = [book for book in books if book.is_favorite]
     else:
-        filtered_books = [book for book in book_list if hit(book, query)]
+        filtered_books = [book for book in books if hit(book, query)]
 
     return filtered_books

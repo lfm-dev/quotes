@@ -2,7 +2,7 @@ from classes.Author import Author
 
 def get_authors(books):
     authors = {}
-    for book in books.values():
+    for book in books:
         if book.author not in authors:
             authors[book.author] = Author(book.author)
 
