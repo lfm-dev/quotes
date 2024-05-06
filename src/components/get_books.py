@@ -3,7 +3,7 @@ import sys
 from classes.Book import Book
 
 def read_md_file(md_file_name):
-    books = {}
+    books = []
     year = md_file_name.split('.')[0] # md name: year.md
     with open(md_file_name, encoding="utf-8") as file_handle:
         book_number = 0
@@ -14,16 +14,16 @@ def read_md_file(md_file_name):
                 book_number += 1
                 book_id = f'{year[-2:]}-{book_number}'
                 book_name, author, is_favorite = get_book_name_author(line, md_file_name)
-                books[book_id] = Book(book_id, book_name, author, year, is_favorite)
+                books.append(Book(book_id, book_name, author, year, is_favorite))
             elif line.startswith('[') and line.strip().endswith(']'):
                 if len(line.strip()) == 2: # line = []
                     continue
-                books[book_id].tags = line.lower().strip('[]\n').split(',')
+                books[-1].tags = line.lower().strip('[]\n').split(',')
             elif line.startswith('*'): # new quote starts
-                books[book_id].quotes.append(line.lstrip('* '))
+                books[-1].quotes.append(line.lstrip('* '))
             else:
-                books[book_id].quotes[-1] +=  '\n  ' + line # newline in markdown
-    return list(books.values())
+                books[-1].quotes[-1] +=  '\n  ' + line # newline in markdown
+    return books
 
 def get_book_name_author(line, file_name):
     is_favorite = line.strip().endswith('*')
