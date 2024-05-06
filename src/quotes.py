@@ -15,6 +15,7 @@ def main():
     args, parser = get_args()
     books = get_books()
 
+    #! SEARCH BOOKS
     if args.show_books:
         query = args.show_books.strip().casefold()
         filtered_books = filter_books(books, query)
@@ -26,6 +27,7 @@ def main():
         else:
             print('No books found.')
 
+    #! SEARCH QUOTES
     elif args.show_quotes:
         query = args.show_quotes
         quotes = filter_quotes(books, query)
@@ -34,10 +36,12 @@ def main():
         else:
             print('Quotes not found.')
 
+    #! PRINT AUTHORS TABLE
     elif args.show_authors:
         authors = get_authors(books)
         print_authors_table(authors)
 
+    #! PRINT TAGS TABLE
     elif args.show_tags:
         tags = get_tags(books)
         print_tags_table(tags)
